@@ -3,7 +3,10 @@ package com.example.actuator.demo.controller;
 import com.example.actuator.demo.model.Ticket;
 import com.example.actuator.demo.service.TicketBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.ServerRequest;
 
 @RestController
 @RequestMapping(value="/api/tickets")
@@ -13,8 +16,8 @@ public class TicketBookingController {
     private TicketBookingService ticketBookingService;
 
     @PostMapping(value="/create")
-    public Ticket createTicket(@RequestBody Ticket ticket){
-        return ticketBookingService.createTicket(ticket);
+    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket){
+        return new ResponseEntity<>(ticketBookingService.createTicket(ticket), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value="/ticket/{ticketId}")
@@ -31,7 +34,7 @@ public class TicketBookingController {
         ticketBookingService.deleteTicket(ticketId);
     }
 
-    @PutMapping(value="/ticket/{ticketId}/{newEmail:.+}")
+    @PutMapping(value="/ticket/{ticketId}/{newEmail:[a-z]+}")
     public Ticket updateTicket(@PathVariable("ticketId")Integer ticketId,@PathVariable("newEmail")String newEmail){
         return ticketBookingService.updateTicket(ticketId,newEmail);
     }

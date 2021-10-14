@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Hello</title>
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
+    <p>Id: <input type="text" th:field="*{id}"/></p>
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <select name="role">
+        <option th:each="role: ${T(com.example.actuator.demo.model.Role).values()}" th:value="${role}" th:text="${role}"></option>
+    </select>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<a th:href="@{/allTickets}">Greeting</a>
+</body>
+</html>
